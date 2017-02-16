@@ -10,7 +10,7 @@ import java.util.Random;
  * Foxes age, move, eat rabbits, and die.
  * 
  * @author David J. Barnes and Michael Kölling
- * @version 2011.07.31
+ * @version 2011.07.311
  */
 public class Wolf extends Animal
 {
@@ -44,6 +44,9 @@ public class Wolf extends Animal
      * @param field The field currently occupied.
      * @param location The location within the field.
      */
+    public void eatFood(){
+    
+    }
     public Wolf(boolean randomAge, Field field, Location location)
     {
         super(field, location);
