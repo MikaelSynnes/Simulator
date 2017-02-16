@@ -10,25 +10,34 @@ package Simulator;
  * @author Mikael
  */
 public class Grass {
+
     private Location loc;
-    private int value;
-    
-    
-    
-    public Grass(int value, Location loc){
-        this.value=value;
-        this.loc=loc;
-    
+    private int GRASS_MAX_VALUE;
+    private int value = 5;
+    private Field field;
+
+    public Grass(Field field, Location loc) {
+
+        this.loc = loc;
+        this.field = field;
+
     }
-    
-    
-    public void eatGrass(){
-        value--;
+
+    public void eatGrass() {
+        if (value >0) {
+            value--;
+        }
     }
-    
-    
-    private int grassValue(){
+    public Location returnLocation(){
+        return loc;
+    }
+
+    public void incrementGrass() {
+            if (value <GRASS_MAX_VALUE) value++;
+    }
+
+    private int grassValue() {
         return value;
-        
+
     }
 }
