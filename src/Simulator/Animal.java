@@ -45,7 +45,7 @@ public abstract class Animal
     {
         return alive;
     }
-    abstract public void eatFood();
+  
     /**
      * Indicate that the animal is no longer alive.
      * It is removed from the field.

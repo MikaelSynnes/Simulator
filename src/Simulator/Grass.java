@@ -23,14 +23,17 @@ public class Grass {
 
     }
 
-    public Boolean eatGrass() {
+    public Boolean Grass() {
         if (grassValue() > 0) {
-            value--;
+           
             return true;
 
         } else {
             return false;
         }
+    }
+    public void decreaseGrass(){
+        value--;
     }
 
     public Location returnLocation() {
@@ -51,7 +54,7 @@ public class Grass {
     void setLocation(Location newLocation) {
 
         location = newLocation;
-        field.placeGrass(this, newLocation);
+        field.place(this, newLocation);
     }
 
     public Field getField() {

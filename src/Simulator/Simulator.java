@@ -24,8 +24,10 @@ public class Simulator {
     private static final double FOX_CREATION_PROBABILITY = 0.02;
     // The probability that a rabbit will be created in any given grid position.
     private static final double RABBIT_CREATION_PROBABILITY = 0.08;
+
+    private static final double HUNTER_CREATION_PROBABILITY = 0.002;
     
-    private static final double HUNTER_CREATION_PROBABILITY =0.002;
+    private static final double GRASS_CREATION_PROBABILITY=1;
 
     private List<Grass> grassArray;
 
@@ -33,6 +35,7 @@ public class Simulator {
     private List<Animal> animals;
     // The current state of the field.
     private Field field;
+    private Field grassField;
     // The current step of the simulation.
     private int step;
     private int incrementGrass;
@@ -63,6 +66,7 @@ public class Simulator {
 
         animals = new ArrayList<Animal>();
         field = new Field(depth, width);
+        grassField = new Field(depth, width);
         grassArray = new ArrayList<Grass>();
 
         // Create a view of the state of each location in the field.
@@ -122,23 +126,8 @@ public class Simulator {
                 it.remove();
 
             }
-          /* if (animal instanceof Sheep) {
-               
-             
-           }
-   
-                Location loc = animal.getLocation();
-
-                Object grassO = field.getGrassAt(loc);
-                Grass grass=(Grass)grassO;
-                if(grass!=null){
-
-                boolean isThereGrass = grass.eatGrass();
-                if (isThereGrass == true) {
-                    animal.eatFood();
-                } 
-            } */
-        } 
+          
+        }
         // Add the newly born foxes and rabbits to the main lists.
         animals.addAll(newAnimals);
 
@@ -149,7 +138,6 @@ public class Simulator {
     /**
      * Reset the simulation to a starting position.
      */
-
     public void reset() {
         step = 0;
         animals.clear();
@@ -175,15 +163,15 @@ public class Simulator {
                     Location location = new Location(row, col);
                     Sheep rabbit = new Sheep(true, field, location);
                     animals.add(rabbit);
-                }
-                 else if (rand.nextDouble() <= HUNTER_CREATION_PROBABILITY) {
+                } else if (rand.nextDouble() <= HUNTER_CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
                     Jeger jeger = new Jeger(true, field, location);
                     animals.add(jeger);
+                } else if (rand.nextDouble() <= GRASS_CREATION_PROBABILITY) {
+                    Location loc = new Location(row, col);
+                    Grass grass = new Grass(grassField, loc);
+                    grassArray.add(grass);
                 }
-                Location loc = new Location(row, col);
-                Grass grass = new Grass(field, loc);
-                grassArray.add(grass);
                 // else leave the location empty.
             }
         }

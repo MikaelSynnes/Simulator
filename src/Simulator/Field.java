@@ -34,8 +34,8 @@ public class Field {
         this.depth = depth;
         this.width = width;
         field = new Object[depth][width];
-
-        grassField = new Object[depth][width];
+        grassField=new Object[depth][width];
+        
     }
 
     /**
@@ -45,7 +45,7 @@ public class Field {
         for (int row = 0; row < depth; row++) {
             for (int col = 0; col < width; col++) {
                 field[row][col] = null;
-                grassField[row][col]=null;
+                
             }
         }
         
@@ -59,6 +59,7 @@ public class Field {
      */
     public void clear(Location location) {
         field[location.getRow()][location.getCol()] = null;
+        grassField[location.getRow()][location.getCol()] = null;
     }
 
     /**
@@ -120,8 +121,8 @@ public class Field {
 
     public Object getGrassAt(int row, int col) {
        
-           Object g= grassField[row][col];
-           return g;
+           return grassField[row][col];
+         
         
        
     }

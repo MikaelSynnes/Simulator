@@ -29,7 +29,6 @@ public class Sheep extends Animal {
     private int MAX_FOOD_VALUE = 10;
     private int age;
     private int food = 5;
-    
 
     /**
      * Create a new rabbit. A rabbit may be created with age zero (a new born)
@@ -57,6 +56,7 @@ public class Sheep extends Animal {
         incrementAge();
         if (isAlive()) {
             increaseHunger();
+            findFood();
             giveBirth(newRabbits);
             // Try to move into a free location.
             Location newLocation = getField().freeAdjacentLocation(getLocation());
@@ -79,23 +79,21 @@ public class Sheep extends Animal {
             setDead();
         }
     }
-   
 
-    public void eatFood() {
-         food++;
+    public void eatGrass() {
+        food++;
         if (food < MAX_FOOD_VALUE) {
-            food=5;
+            food = 5;
 
         }
     }
 
-
     public void increaseHunger() {
-         //food--;
+        //food--;
         if (food < 1) {
             setDead();
             System.out.println(this.age + "died From hunger");
-        } 
+        }
     }
 
     /**
@@ -138,4 +136,24 @@ public class Sheep extends Animal {
     private boolean canBreed() {
         return age >= BREEDING_AGE;
     }
+
+    private void findFood() {
+        Field field = getField();
+        Location where = getLocation();
+        Object grassObject = field.getGrassAt(where);
+        
+        if (grassObject instanceof Grass) {
+            Grass grass = (Grass) grassObject;
+            if (grass.Grass()) {
+                grass.decreaseGrass();
+                eatGrass();
+
+            }
+        }
+
+    }
+
+   
+   
+
 }
