@@ -10,8 +10,9 @@ package Simulator;
  * @author Mikael
  */
 public class JavaApplication13 {
-    
+        
     public static void main(String[] args) {
+        System.out.println("Simulation Started");
         Simulator s=new Simulator();
         s.runLongSimulation();
     }

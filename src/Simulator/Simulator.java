@@ -24,6 +24,10 @@ public class Simulator {
     private static final double FOX_CREATION_PROBABILITY = 0.02;
     // The probability that a rabbit will be created in any given grid position.
     private static final double RABBIT_CREATION_PROBABILITY = 0.08;
+    
+    private static final double HUNTER_CREATION_PROBABILITY =0.002;
+
+    private List<Grass> grassArray;
 
     // List of animals in the field.
     private List<Animal> animals;
@@ -35,7 +39,6 @@ public class Simulator {
     private int incrementNow;
     // A graphical view of the simulation.
     private SimulatorView view;
-    private List<Grass> grassArray;
 
     /**
      * Construct a simulation field with default size.
@@ -61,12 +64,13 @@ public class Simulator {
         animals = new ArrayList<Animal>();
         field = new Field(depth, width);
         grassArray = new ArrayList<Grass>();
-        
 
         // Create a view of the state of each location in the field.
         view = new SimulatorView(depth, width);
         view.setColor(Wolf.class, Color.ORANGE);
         view.setColor(Sheep.class, Color.BLUE);
+        view.setColor(Grass.class, Color.GREEN);
+        view.setColor(Jeger.class, Color.BLACK);
 
         // Setup a valid starting point.
         reset();
@@ -99,34 +103,53 @@ public class Simulator {
     public void simulateOneStep() {
         step++;
         incrementGrass++;
-        incrementNow=incrementGrass%3;
-        
-        if(incrementGrass==0) {
-            
+        incrementNow = incrementGrass % 6;
+
+        if (incrementNow == 0) {
+            for (Grass g : grassArray) {
+                g.incrementGrass();
+            }
         }
-        
+
         // Provide space for newborn animals.
         List<Animal> newAnimals = new ArrayList<Animal>();
         // Let all rabbits act.
         for (Iterator<Animal> it = animals.iterator(); it.hasNext();) {
             Animal animal = it.next();
+
             animal.act(newAnimals);
             if (!animal.isAlive()) {
                 it.remove();
 
             }
-           
-        }
+          /* if (animal instanceof Sheep) {
+               
+             
+           }
+   
+                Location loc = animal.getLocation();
 
-// Add the newly born foxes and rabbits to the main lists.
+                Object grassO = field.getGrassAt(loc);
+                Grass grass=(Grass)grassO;
+                if(grass!=null){
+
+                boolean isThereGrass = grass.eatGrass();
+                if (isThereGrass == true) {
+                    animal.eatFood();
+                } 
+            } */
+        } 
+        // Add the newly born foxes and rabbits to the main lists.
         animals.addAll(newAnimals);
 
         view.showStatus(step, field);
+
     }
 
     /**
      * Reset the simulation to a starting position.
      */
+
     public void reset() {
         step = 0;
         animals.clear();
@@ -153,11 +176,17 @@ public class Simulator {
                     Sheep rabbit = new Sheep(true, field, location);
                     animals.add(rabbit);
                 }
+                 else if (rand.nextDouble() <= HUNTER_CREATION_PROBABILITY) {
+                    Location location = new Location(row, col);
+                    Jeger jeger = new Jeger(true, field, location);
+                    animals.add(jeger);
+                }
+                Location loc = new Location(row, col);
+                Grass grass = new Grass(field, loc);
+                grassArray.add(grass);
                 // else leave the location empty.
             }
         }
     }
-
-    
 
 }

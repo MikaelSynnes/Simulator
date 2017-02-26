@@ -11,8 +11,7 @@ public class Location {
     // Row and column positions.
     private int row;
     private int col;
-    private int grassValue=5;
-    private int MAX_GRASS_VALUE=5;
+   
 
     /**
      * Represent a row and column.
@@ -36,21 +35,6 @@ public class Location {
             return false;
         }
     }
-
-    public int returnGrass() {
-        return grassValue;
-    }
-    public void eatGrass(){
-        grassValue--;
-    }
-    public void increaseGrass(){
-        if(grassValue<MAX_GRASS_VALUE){
-            grassValue++;
-        
-        }
-    
-    }
-    
 
     /**
      * Return a string of the form row,column
