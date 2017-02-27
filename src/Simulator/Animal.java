@@ -29,7 +29,7 @@ public abstract class Animal
         this.field = field;
         setLocation(location);
     }
-    
+    abstract public int  returnAge();
     /**
      * Make this animal act - that is: make it do
      * whatever it wants/needs to do.

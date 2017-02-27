@@ -177,4 +177,7 @@ public class Wolf extends Animal
     {
         return age >= BREEDING_AGE;
     }
+      public int returnAge() {
+        return age;
+    }
 }

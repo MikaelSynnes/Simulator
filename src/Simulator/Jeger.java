@@ -18,7 +18,7 @@ public class Jeger extends Animal {
     private static final double TREFFSIKKERHET = 0.2;
     private Location location;
     private int age;
-    private static final int MAX_AGE = 500;
+    private static final int MAX_AGE = 100;
     private boolean alive;
     private final double EMERGE = 0.1;
     private Field field;
@@ -95,6 +95,10 @@ public class Jeger extends Animal {
                 setDead();
             }
         }
+    }
+    public int returnAge(){
+        return age;
+        
     }
 
 }

@@ -55,11 +55,15 @@ public class Sheep extends Animal {
     public void act(List<Animal> newRabbits) {
         incrementAge();
         if (isAlive()) {
-            increaseHunger();
-            findFood();
+            // increaseHunger();
+            // Location newLocation = findFood();
+            Location newLocation = getField().freeAdjacentLocation(getLocation());
             giveBirth(newRabbits);
             // Try to move into a free location.
-            Location newLocation = getField().freeAdjacentLocation(getLocation());
+            // Location newLocation = getField().freeAdjacentLocation(getLocation());
+            if (newLocation == null) {
+                newLocation = getField().freeAdjacentLocation(getLocation());
+            }
             if (newLocation != null) {
                 setLocation(newLocation);
                 // newLocation.eatGrass(); funksjon ikke i bruk
@@ -89,7 +93,7 @@ public class Sheep extends Animal {
     }
 
     public void increaseHunger() {
-        //food--;
+        food--;
         if (food < 1) {
             setDead();
             System.out.println(this.age + "died From hunger");
@@ -137,23 +141,29 @@ public class Sheep extends Animal {
         return age >= BREEDING_AGE;
     }
 
-    private void findFood() {
+    private Location findFood() {
         Field field = getField();
-        Location where = getLocation();
-        Object grassObject = field.getGrassAt(where);
-        
-        if (grassObject instanceof Grass) {
-            Grass grass = (Grass) grassObject;
-            if (grass.Grass()) {
-                grass.decreaseGrass();
-                eatGrass();
+        List<Location> adjacent = field.adjacentLocations(getLocation());
+        Iterator<Location> it = adjacent.iterator();
+        while (it.hasNext()) {
+            Location where = it.next();
+            Object grassObject = field.getObjectAt(where);
 
+            if (grassObject instanceof Grass) {
+                Grass grass = (Grass) grassObject;
+                if (grass.Grass()) {
+                    grass.decreaseGrass();
+                    eatGrass();
+
+                }
             }
-        }
 
+        }
+        return null;
     }
 
-   
-   
+    public int returnAge() {
+        return age;
+    }
 
 }

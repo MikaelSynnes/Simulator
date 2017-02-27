@@ -26,13 +26,14 @@ public class Simulator {
     private static final double RABBIT_CREATION_PROBABILITY = 0.08;
 
     private static final double HUNTER_CREATION_PROBABILITY = 0.002;
-    
-    private static final double GRASS_CREATION_PROBABILITY=1;
+
+    private static final double GRASS_CREATION_PROBABILITY = 1;
 
     private List<Grass> grassArray;
 
     // List of animals in the field.
     private List<Animal> animals;
+    private List<Animal> deadAnimals;
     // The current state of the field.
     private Field field;
     private Field grassField;
@@ -40,6 +41,9 @@ public class Simulator {
     private int step;
     private int incrementGrass;
     private int incrementNow;
+       int deadHunter;
+        int deadSheep;
+        int deadWolf;
     // A graphical view of the simulation.
     private SimulatorView view;
 
@@ -65,6 +69,7 @@ public class Simulator {
         }
 
         animals = new ArrayList<Animal>();
+        deadAnimals = new ArrayList<Animal>();
         field = new Field(depth, width);
         grassField = new Field(depth, width);
         grassArray = new ArrayList<Grass>();
@@ -74,7 +79,7 @@ public class Simulator {
         view.setColor(Wolf.class, Color.ORANGE);
         view.setColor(Sheep.class, Color.BLUE);
         view.setColor(Grass.class, Color.GREEN);
-        view.setColor(Jeger.class, Color.BLACK);
+        view.setColor(Jeger.class, Color.RED);
 
         // Setup a valid starting point.
         reset();
@@ -86,6 +91,27 @@ public class Simulator {
      */
     public void runLongSimulation() {
         simulate(4000);
+               logg();
+
+    }
+
+    public void logg() {
+     
+
+        for (Animal animal : deadAnimals) {
+            System.out.println(animal.returnAge());
+            if (animal instanceof Jeger) {
+                deadHunter++;
+            }
+            if (animal instanceof Wolf) {
+                deadWolf++;
+            }
+            if (animal instanceof Sheep) {
+                deadSheep++;
+            }
+
+        }
+        System.out.println("Jeger: " + deadHunter + " Ulv " + deadWolf + " Sau " + deadSheep);
     }
 
     /**
@@ -124,9 +150,11 @@ public class Simulator {
             animal.act(newAnimals);
             if (!animal.isAlive()) {
                 it.remove();
+                //System.out.println(animal.returnAge());
+                deadAnimals.add(animal);
 
             }
-          
+
         }
         // Add the newly born foxes and rabbits to the main lists.
         animals.addAll(newAnimals);
