@@ -18,7 +18,7 @@ public class Sheep extends Animal {
     // The age to which a rabbit can live.
     private static final int MAX_AGE = 120;
     // The likelihood of a rabbit breeding.
-    private static final double BREEDING_PROBABILITY = 0.03;
+    private static final double BREEDING_PROBABILITY = 0.07;
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 4;
     // A shared random number generator to control breeding.

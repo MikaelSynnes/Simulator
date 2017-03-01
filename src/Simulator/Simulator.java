@@ -21,7 +21,7 @@ public class Simulator {
     // The default depth of the grid.
     private static final int DEFAULT_DEPTH = 80;
     // The probability that a fox will be created in any given grid position.
-    private static final double FOX_CREATION_PROBABILITY = 0.02;
+    private static final double FOX_CREATION_PROBABILITY = 0.04;
     // The probability that a rabbit will be created in any given grid position.
     private static final double RABBIT_CREATION_PROBABILITY = 0.08;
 
@@ -41,9 +41,12 @@ public class Simulator {
     private int step;
     private int incrementGrass;
     private int incrementNow;
-       int deadHunter;
-        int deadSheep;
-        int deadWolf;
+    int deadHunter;
+    int averageDeathHunter;
+    int deadSheep;
+    int averageDeathSheep;
+    int deadWolf;
+    int averageDeathWolf;
     // A graphical view of the simulation.
     private SimulatorView view;
 
@@ -91,27 +94,37 @@ public class Simulator {
      */
     public void runLongSimulation() {
         simulate(4000);
-               logg();
+        logg();
 
     }
 
     public void logg() {
-     
 
         for (Animal animal : deadAnimals) {
+
             System.out.println(animal.returnAge());
             if (animal instanceof Jeger) {
+
                 deadHunter++;
+                averageDeathHunter = averageDeathHunter + animal.returnAge();
             }
             if (animal instanceof Wolf) {
                 deadWolf++;
+                averageDeathWolf = averageDeathWolf + animal.returnAge();
             }
             if (animal instanceof Sheep) {
                 deadSheep++;
+                averageDeathSheep = averageDeathSheep + animal.returnAge();
             }
 
         }
-        System.out.println("Jeger: " + deadHunter + " Ulv " + deadWolf + " Sau " + deadSheep);
+
+        int h = 1;// (averageDeathHunter / deadHunter);
+        int s = (averageDeathSheep / deadSheep);
+        int w = (averageDeathWolf / deadWolf);
+        System.out.println(averageDeathWolf);
+        System.out.println(w + s);
+        System.out.println("Jeger: " + deadHunter + " gjennomsnitt: " + h + "  Ulv " + deadWolf + " gjennomsnitt: " + w + " Sau " + deadSheep + " gjennomsnitt: " + s);
     }
 
     /**
@@ -138,6 +151,12 @@ public class Simulator {
         if (incrementNow == 0) {
             for (Grass g : grassArray) {
                 g.incrementGrass();
+            }
+        }
+
+        for (Animal animal : deadAnimals) {
+            if (animal.isAlive() == true) {
+                System.out.println("Error");
             }
         }
 
