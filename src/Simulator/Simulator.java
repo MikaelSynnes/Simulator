@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.awt.Color;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * A simple predator-prey simulator, based on a rectangular field containing
@@ -34,6 +36,7 @@ public class Simulator {
     // List of animals in the field.
     private List<Animal> animals;
     private List<Animal> deadAnimals;
+    private List<Logg> loggfil;
     // The current state of the field.
     private Field field;
     private Field grassField;
@@ -76,6 +79,7 @@ public class Simulator {
         field = new Field(depth, width);
         grassField = new Field(depth, width);
         grassArray = new ArrayList<Grass>();
+        loggfil = new ArrayList<Logg>();
 
         // Create a view of the state of each location in the field.
         view = new SimulatorView(depth, width);
@@ -93,11 +97,83 @@ public class Simulator {
      * (4000 steps).
      */
     public void runLongSimulation() {
-        simulate(4000);
-        logg();
+        simulate(1000);
+        logger();
 
     }
 
+        public void logger(){
+        String a;
+        try{
+        PrintWriter writer = new PrintWriter("TestLog.txt", "UTF-8");
+        writer.println("Step\tAge\tAnimal");
+         for (Logg l : loggfil){
+                if(l.getAnimal() instanceof Wolf){
+                    writer.println(l.getStep()+"\t"+l.getAge()+"\t"+"Wolf");  
+                }
+                if(l.getAnimal() instanceof Sheep){
+                    writer.println(l.getStep()+"\t"+l.getAge()+"\t"+"Sheep");
+                }
+                
+            }
+        writer.close();
+        } catch (IOException e) {
+       // do something
+        }
+       
+    }
+        
+    public void deadAnimals(){
+        List<DeadAnimal> dAnimals = new ArrayList<>();
+        int deadSheep1 = 0;
+        int deadWolf1 = 0;
+        int sheep1=0; 
+        int wolf1 = 0;
+
+        for(int i=1; i<=4000;i++){
+            
+            for(Logg l : loggfil){
+                if(l.getStep() == i){
+                    if(l.getAnimal() instanceof Wolf){
+                        deadWolf1++;
+                    }
+                    if(l.getAnimal() instanceof Sheep){
+                        deadSheep1++;
+                    }
+                }       
+            }
+            for(Animal a: animals){
+                if(a instanceof Wolf){
+                    wolf1++;
+                }
+                if(a instanceof Sheep){
+                    sheep1++;
+                }
+            }
+            
+            dAnimals.add(new DeadAnimal(i,sheep1,wolf1,deadSheep1,deadWolf1));
+
+            deadSheep1 = 0;
+            deadWolf1 = 0;
+            wolf1 = 0;
+            sheep1=0;
+            try{
+                PrintWriter writer = new PrintWriter("DeadPerStep.txt", "UTF-8");
+                writer.println("Step\tSheep\tWolf\tdSheep\tdWolf");
+                for(DeadAnimal d: dAnimals){
+                    writer.println(d.getStep()+"\t"+d.getSheep()+"\t"+d.getWolf()+"\t"+d.getDeadSheep()+"\t"+d.getDeadWolf());
+                }
+                writer.close();
+            } catch (IOException e) {
+           // do something
+            
+            }
+        
+        }
+        
+         
+    }
+        
     public void logg() {
 
         for (Animal animal : deadAnimals) {
