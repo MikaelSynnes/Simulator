@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.awt.Color;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 
 /**
  * A simple predator-prey simulator, based on a rectangular field containing
@@ -35,7 +36,7 @@ public class Simulator {
 
     // List of animals in the field.
     private List<Animal> animals;
-    private List<Animal> deadAnimals;
+    private HashMap<Integer,Animal> deadAnimals;
     private List<Logg> loggfil;
     // The current state of the field.
     private Field field;
@@ -75,7 +76,7 @@ public class Simulator {
         }
 
         animals = new ArrayList<Animal>();
-        deadAnimals = new ArrayList<Animal>();
+        deadAnimals = new HashMap<Integer,Animal>();
         field = new Field(depth, width);
         grassField = new Field(depth, width);
         grassArray = new ArrayList<Grass>();
@@ -177,7 +178,7 @@ public class Simulator {
         
     public void logg() {
 
-        for (Animal animal : deadAnimals) {
+        for (Animal animal : deadAnimals.values()) {
 
             System.out.println(animal.returnAge());
             if (animal instanceof Jeger) {
@@ -231,7 +232,7 @@ public class Simulator {
             }
         }
 
-        for (Animal animal : deadAnimals) {
+        for (Animal animal : deadAnimals.values()) {
             if (animal.isAlive() == true) {
                 System.out.println("Error");
             }
@@ -247,7 +248,7 @@ public class Simulator {
             if (!animal.isAlive()) {
                 it.remove();
                 //System.out.println(animal.returnAge());
-                deadAnimals.add(animal);
+                deadAnimals.put(step,animal);
                 Logg dead = new Logg(step, animal);
                 loggfil.add(dead);
             }
