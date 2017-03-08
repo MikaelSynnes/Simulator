@@ -102,21 +102,22 @@ public class Simulator {
 
     }
 
-        public void logger(){
-        String a;
+    public void logger(){
         try{
-        PrintWriter writer = new PrintWriter("TestLog.txt", "UTF-8");
-        writer.println("Step\tAge\tAnimal");
+        PrintWriter wWriter = new PrintWriter("Wolf.txt", "UTF-8");
+        PrintWriter sWriter = new PrintWriter("Sheep.txt", "UTF-8");
+        wWriter.println("Step\tAge\tAnimal");
+        sWriter.println("Step\tAge\tAnimal");
          for (Logg l : loggfil){
                 if(l.getAnimal() instanceof Wolf){
-                    writer.println(l.getStep()+"\t"+l.getAge()+"\t"+"Wolf");  
+                    wWriter.println(l.getStep()+"\t"+l.getAge()+"\t"+"Wolf");  
                 }
                 if(l.getAnimal() instanceof Sheep){
-                    writer.println(l.getStep()+"\t"+l.getAge()+"\t"+"Sheep");
+                    sWriter.println(l.getStep()+"\t"+l.getAge()+"\t"+"Sheep");
                 }
-                
             }
-        writer.close();
+        wWriter.close();
+        sWriter.close();
         } catch (IOException e) {
        // do something
         }
@@ -247,7 +248,8 @@ public class Simulator {
                 it.remove();
                 //System.out.println(animal.returnAge());
                 deadAnimals.add(animal);
-
+                Logg dead = new Logg(step, animal);
+                loggfil.add(dead);
             }
 
         }
