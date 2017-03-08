@@ -134,7 +134,7 @@ public class Simulator {
         int sheep1=0; 
         int wolf1 = 0;
 
-        for(int i=1; i<=4000;i++){
+        for(int i=1; i<=1000;i++){
             
             for(Logg l : loggfil){
                 if(l.getStep() == i){
