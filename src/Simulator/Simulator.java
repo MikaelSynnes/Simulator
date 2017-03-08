@@ -38,6 +38,7 @@ public class Simulator {
     private List<Animal> animals;
     private HashMap<Integer,Animal> deadAnimals;
     private List<Logg> loggfil;
+    private List<Logg> stepAnimal;
     // The current state of the field.
     private Field field;
     private Field grassField;
@@ -81,6 +82,7 @@ public class Simulator {
         grassField = new Field(depth, width);
         grassArray = new ArrayList<Grass>();
         loggfil = new ArrayList<Logg>();
+        stepAnimal = new ArrayList<Logg>();
 
         // Create a view of the state of each location in the field.
         view = new SimulatorView(depth, width);
@@ -99,7 +101,7 @@ public class Simulator {
      */
     public void runLongSimulation() {
         simulate(1000);
-        logger();
+        deadAnimals();
 
     }
 
@@ -144,12 +146,14 @@ public class Simulator {
                     }
                 }       
             }
-            for(Animal a: animals){
-                if(a instanceof Wolf){
-                    wolf1++;
-                }
-                if(a instanceof Sheep){
-                    sheep1++;
+            for(Logg l: stepAnimal){
+                if(l.getStep() == i){
+                    if(l.getAnimal() instanceof Wolf){
+                        wolf1++;
+                    }
+                    if(l.getAnimal() instanceof Sheep){
+                        sheep1++;
+                    }
                 }
             }
             
@@ -223,6 +227,14 @@ public class Simulator {
      */
     public void simulateOneStep() {
         step++;
+        for(Animal a : animals){
+            if(a instanceof Sheep){
+                stepAnimal.add(new Logg(step,a));
+            }
+            if(a instanceof Wolf){
+                stepAnimal.add(new Logg(step,a));
+            }
+        }
         incrementGrass++;
         incrementNow = incrementGrass % 6;
 
