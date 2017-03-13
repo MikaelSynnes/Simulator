@@ -11,8 +11,11 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 /**
@@ -33,12 +36,15 @@ public class WMS extends Application {
         Button btn2 = createButton(400, 100,"Tekst",null,primaryStage); buttons.add(btn2);
         Button btn3 = createButton(400, 300,"Tekst",null,primaryStage); buttons.add(btn3);
         Button btn4 = createButton(100, 300,"Tekst",null,primaryStage); buttons.add(btn4);
-       
+        Header header = new Header(350, "Header");
+        
+        
         Pane root = new Pane();
-
+        
+        root.getChildren().add(header.createHeader());
         for (Button b : buttons) {
             root.getChildren().add(b);
-        }
+        }   
         Scene scene = new Scene(root, 800, 600);
 
         primaryStage.setTitle("Hello World!");
@@ -73,5 +79,5 @@ public class WMS extends Application {
         btn.setMinSize(250,150);
         return btn;
     }
-
+    
 }
