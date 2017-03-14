@@ -32,11 +32,11 @@ public class WMS extends Application {
         
     
         // lager knapper og legger dem til i en ArrayList for å legge dem til i scena uten og å måtte kode duplisere
-        Button btn = createButton(100, 100,"Tekst",null, primaryStage); buttons.add(btn);
-        Button btn2 = createButton(400, 100,"Tekst",null,primaryStage); buttons.add(btn2);
-        Button btn3 = createButton(400, 300,"Tekst",null,primaryStage); buttons.add(btn3);
-        Button btn4 = createButton(100, 300,"Tekst",null,primaryStage); buttons.add(btn4);
-        Header header = new Header(350, "Header");
+        Button btn = createButton(100, 100,"Lager oversikt",null, primaryStage); buttons.add(btn);
+        Button btn2 = createButton(400, 100,"Vare registrering",null,primaryStage); buttons.add(btn2);
+        Button btn3 = createButton(400, 300,"Truck",null,primaryStage); buttons.add(btn3);
+        Button btn4 = createButton(100, 300,"Ansatte",null,primaryStage); buttons.add(btn4);
+        Header header = new Header(350, "WMS");
         
         
         Pane root = new Pane();
@@ -47,7 +47,7 @@ public class WMS extends Application {
         }   
         Scene scene = new Scene(root, 800, 600);
 
-        primaryStage.setTitle("Hello World!");
+        primaryStage.setTitle("WMS");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
